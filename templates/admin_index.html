@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .team-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .team-list li {
+            margin-bottom: 10px;
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <button id="refreshTeams" class="btn">Clear All Teams</button>
+
+        <h2>Existing Teams</h2>
+        <ul id="teamList" class="team-list">
+            {% for team in teams %}
+                <li>Team {{ loop.index }}:
+                    {% for participant in team %}
+                        {{ participant.participant_id }} ({{ participant.role }})
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </li>
+            {% else %}
+                <li>No teams available</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        document.getElementById('refreshTeams').addEventListener('click', function() {
+            fetch('/admin/refresh_teams')
+                .then(response => response.json())
+                .then(data => {
+                    alert('All teams have been cleared!');
+                    location.reload();  // Reload the page to fetch updated (empty) teams
+                })
+                .catch(error => {
+                    alert('Failed to clear teams.');
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>
