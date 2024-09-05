@@ -118,7 +118,7 @@ def join_queue():
             db.session.commit()  # Commit all role changes and historical data at once
 
             teams.append(group)
-            group_message = f"Welcome Team ({', '.join([f'{p.participant_id} as {p.role}' for p in group])}). Please enter Zoom room 926 146 3145 to join the experiment. Make sure you will use your prolific ID as your nick name."
+            group_message = f"Welcome Team ({', '.join([f'{p.participant_id} as {p.role}' for p in group])}). Please enter Zoom room 959 8513 5275 to join the experiment. Make sure you will use your prolific ID as your nick name."
             return jsonify(group_message), 200
         else:
             return jsonify("Waiting for more participants"), 200
